@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +31,16 @@ public class UserController {
 
         if (user.isPresent())
             return ResponseEntity.ok(user.get());
+        else
+            return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.findAll();
+
+        if (!users.isEmpty())
+            return ResponseEntity.ok(users);
         else
             return ResponseEntity.notFound().build();
     }
