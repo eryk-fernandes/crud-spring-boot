@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,7 +26,12 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable("userId") String userId) {
-        return null;
+        Optional<User> user = userService.findUserById(userId);
+
+        if (user.isPresent())
+            return ResponseEntity.ok(user.get());
+        else
+            return ResponseEntity.notFound().build();
     }
 
 }
