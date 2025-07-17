@@ -35,14 +35,17 @@ public class UserController {
             return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.findAll();
 
-        if (!users.isEmpty())
-            return ResponseEntity.ok(users);
-        else
-            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(users);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable("userId") String userId) {
+        userService.deleteByID(userId);
+        return ResponseEntity.noContent().build();
     }
 
 }
